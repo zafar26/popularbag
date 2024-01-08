@@ -2,7 +2,7 @@ import User from "@/utils/models/User";
 import connect from "@/db"
 import { createToken } from "@/utils/helper";
 
-export default async function handler(req, res) {
+export default async function signup(req, res) {
     if (req.method !== 'POST') {
         res.status(405).send({ message: 'Only POST requests allowed' })
         return
