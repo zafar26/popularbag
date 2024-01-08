@@ -23,7 +23,7 @@ export default async function signup(req, res) {
             let new_user = new User(info)
             await new_user.save();
             
-            let token = createToken(new_user._id)
+            let token = await createToken(new_user._id)
             
             res.status(200).json({token, message:"Signedup Succesfull"})
         } catch(err){

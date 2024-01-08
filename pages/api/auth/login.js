@@ -21,7 +21,7 @@ export default async function login(req, res) {
             await connect()
             let user = await User.findOne({username: info.username })
             if(user.verifyPasswordSync(info.password)){
-                let token = createToken(user._id)
+                let token = await createToken(user._id)
                 res.status(200).json({token, message:"Loged In Succes"})
             }
             res.status(404).json({ error: 'Wrong Password ' })
