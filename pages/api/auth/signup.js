@@ -12,8 +12,9 @@ export default async function handler(req, res) {
                 let new_user = new User(info)
                 await new_user.save();
                 
-                user.token = createToken(user._id)
-                res.status(200).json(user)
+                let token = createToken(new_user._id)
+                
+                res.status(200).json({token, message:"Signedup Succesfull"})
             } catch(err){
                 res.status(500).json({ error: err,
                     message:'failed to Signup' })

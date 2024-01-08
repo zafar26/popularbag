@@ -5,7 +5,6 @@ const { Schema } = mongoose;
 const bookSchema= new Schema({
     title: {
         type: String,
-        // index: true
     },
     description: {
         type: String,

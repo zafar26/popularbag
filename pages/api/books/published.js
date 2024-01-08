@@ -11,7 +11,16 @@ export default async function handler(req, res) {
             }
             await connect()
 
-            let books = await Book.find({is_published: true})
+            let page = 1;
+            let limit = 10;
+            if(req.query.page ){
+                page = req.query.page
+            }
+            if(req.query.limit){
+                limit = req.query.limit
+            }
+
+            let books = await Book.find({is_published: true}).skip((page-1) * limit).limit(limit)
             res.status(200).json({ books })
             
         }catch(err){

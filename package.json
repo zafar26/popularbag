@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.17.9",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
     "mongoose-bcrypt": "^1.11.0",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.49.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
