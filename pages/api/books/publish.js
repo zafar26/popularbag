@@ -1,8 +1,15 @@
 import Book from "@/utils/models/Book";
 import  connect from "@/db";
 import { decodeToken } from "@/utils/helper";
+import NextCors from 'nextjs-cors';
 
 export default async function handler(req, res) {
+    await NextCors(req, res, {
+        // Options
+        methods: [ 'POST' ],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+     });
     if (req.method === 'POST') {
         try{
             let userId = decodeToken(req.headers.authorization)

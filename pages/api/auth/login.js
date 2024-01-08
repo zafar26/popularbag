@@ -1,8 +1,15 @@
 import User from "@/utils/models/User";
 import connect from "@/db"
 import { createToken } from "@/utils/helper";
+import NextCors from 'nextjs-cors';
 
 export default async function login(req, res) {
+    await NextCors(req, res, {
+        // Options
+        methods: [ 'POST' ],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+     });
     if (req.method !== 'POST') {
         res.status(405).send({ message: 'Only POST requests allowed' })
         return
