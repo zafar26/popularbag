@@ -2,7 +2,6 @@ import connect from "@/db"
 import { decodeToken } from "@/utils/helper"
 import Book from "@/utils/models/Book"
 
-export const runtime = 'edge'
 
 export default async function handler(req, res) {
     if(req.method === "GET"){    

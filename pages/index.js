@@ -16,14 +16,15 @@ export default function Home() {
         <div className='flex flex-col md:flex-row mt-4'>
           {token?            
           <>
+            </>
+          : <>
+            <Link href={"/signup"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Signup</Link>
+            <Link href={"/login"} className='m-2 h-18 bg-green-700 p-2 rounded shadow text-white '>Login</Link>
             <Link href={"/search"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Search a Book</Link>
             <Link href={"/publish"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Publish a Book</Link>
             <Link href={"/list"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>My Books</Link>
             <button className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white ' onClick={()=>{localStorage.removeItem("token"); alert("Loged out")}}>Log Out</button>
-          </>
-          : <>
-            <Link href={"/signup"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Signup</Link>
-            <Link href={"/login"} className='m-2 h-18 bg-green-700 p-2 rounded shadow text-white '>Login</Link>
+          
           </>}
         </div>
       </div>
