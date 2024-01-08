@@ -12,7 +12,7 @@ function useBooks() {
         queryKey: ['books'],
         queryFn: async () => {
             try {
-                const response = await fetch("/api/books/published", {
+                const response = await fetch(`${process.env.BASE_URL}api/books/published`, {
                   method: "GET", 
                   headers: {
                     "Content-Type": "application/json",
@@ -35,7 +35,7 @@ function useBooks() {
 }
 async function getBooks(pageno){
     try {
-        const response = await fetch("/api/books/published?page="+pageno, {
+        const response = await fetch(`${process.env.BASE_URL}api/books/published?page=${pageno}`, {
           method: "GET", 
           headers: {
             "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const Search= ()=> {
     }
     async function searchBooks(searchValue) {
         try {
-            const response = await fetch("/api/books/search?searchTitle="+searchValue, {
+            const response = await fetch(`${process.env.BASE_URL}api/books/search?searchTitle=${searchValue}`, {
                 method: "GET", 
                 headers: {
                 "Content-Type": "application/json",

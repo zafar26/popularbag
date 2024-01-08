@@ -11,7 +11,7 @@ function useBooks() {
         queryKey: ['books'],
         queryFn: async () => {
             try {
-                const response = await fetch("/api/books/user", {
+                const response = await fetch(`${process.env.BASE_URL}api/books/user`, {
                   method: "GET", 
                   headers: {
                     "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const List= ()=> {
   
     const unPublish = async(e) =>{
         try {
-            const response = await fetch("/api/books/unpublish/"+ e.target.id, {
+            const response = await fetch(`${process.env.BASE_URL}/api/books/unpublish/${e.target.id}`, {
               method: "PUT", 
               headers: {
                 "Content-Type": "application/json",

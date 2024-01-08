@@ -13,7 +13,7 @@ export default async function handler(req, res) {
      });
     if (req.method === 'POST') {
         try{
-            let userId = decodeToken(req.headers.authorization)
+            let userId = await decodeToken(req.headers.authorization)
             if(!userId ){ 
                 res.status(404).json({ message: "Invalid Token"})
             }

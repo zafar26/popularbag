@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -14,7 +15,7 @@ export default function Home() {
       <div>
         <span className='flex justify-center text-3xl'> Welcome ! </span>
         <div className='flex flex-col md:flex-row mt-4'>
-          {token?            
+          {!token?            
           <>
             </>
           : <>

@@ -15,7 +15,7 @@ const Publish= ()=> {
     
     const onSubmit = async(data) => {
         try {
-            const response = await fetch("/api/books/publish", {
+            const response = await fetch(`${process.env.BASE_URL}api/books/publish`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -27,11 +27,11 @@ const Publish= ()=> {
         
             let result = await response.json(); 
             
-            if(!result.error){
-                alert("Published")
-                router.push("/")
-            }else{
+            if(result.error){
                 alert("failed")
+            }else{
+                router.push("/")
+                alert("Published")
             }
 
         } catch (error) {

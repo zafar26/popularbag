@@ -11,6 +11,7 @@ export async function decodeToken(auth){
 }
 
 export async function createToken(userId){
-    return "Bearer " + await jwt.sign({ userId }, process.env.JWT_SECRET)
+    let token = "Bearer " + await jwt.sign({ userId }, process.env.JWT_SECRET)
+    return token
 }
 
