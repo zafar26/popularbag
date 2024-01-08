@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import * as mongoBcrypt from 'mongoose-bcrypt';
 
 const { Schema } = mongoose;
 
@@ -16,6 +17,6 @@ const userSchema= new Schema({
     }
 }, { timestamps: true })
 
-userSchema.plugin(require('mongoose-bcrypt'));
+userSchema.plugin(mongoBcrypt);
 
 export default mongoose.models.User || mongoose.model("User", userSchema);
