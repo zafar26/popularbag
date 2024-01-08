@@ -3,6 +3,8 @@ import connect from "@/db"
 import { createToken } from "@/utils/helper";
 import NextCors from 'nextjs-cors';
 
+export const runtime = 'edge'
+
 export default async function login(req, res) {
     await NextCors(req, res, {
         // Options

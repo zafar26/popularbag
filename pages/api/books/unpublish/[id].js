@@ -3,6 +3,8 @@ import connect from "@/db"
 import { decodeToken } from "@/utils/helper";
 import NextCors from 'nextjs-cors';
 
+export const runtime = 'edge'
+
 export default async function handler(req, res) {
     const { id } = req.query;
     await NextCors(req, res, {
