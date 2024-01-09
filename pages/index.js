@@ -24,6 +24,8 @@ export default function Home() {
             <Link href={"/search"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Search a Book</Link>
             <Link href={"/publish"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Publish a Book</Link>
             <Link href={"/list"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>My Books</Link>
+            <Link href={"/new"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>test new</Link>
+            <Link href={"/"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>My Books</Link>
             <button className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white ' onClick={()=>{localStorage.removeItem("token"); alert("Loged out")}}>Log Out</button>
           
           </>}
