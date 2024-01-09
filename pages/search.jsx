@@ -43,7 +43,11 @@ const Search= ()=> {
               },
             })
             .then((response)=>response.json())
-            .then((result)=> setBooks(result.books))
+            .then((result)=> {
+                if(result.books && result.books.length > 1){
+                    setBooks(result.books)
+                }
+            })
             .catch((err)=>console.log(err))        
         }
     })
@@ -56,9 +60,9 @@ const Search= ()=> {
             },
           })
           .then((response)=>response.json())
-          .then((new_books)=> {
-            if(new_books && new_books.length > 1){
-                setBooks(new_books)
+          .then((result)=> {
+            if(result.books && result.books.length > 1){
+                setBooks(result.books)
             }
           })
           .catch((err)=>console.log(err))            

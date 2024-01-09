@@ -22,20 +22,22 @@ const List= ()=> {
     const[data, setData] = useState([])
   
     useEffect(()=>{
-        fetch(`${process.env.BASE_URL}api/books/user`, {
-              method: "GET", 
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
-              },
-            })
-            .then(r=>r.json())
-            .then(r=>{
-                if(r.books.length >0){
-                    setData(r.books)
-                }
-            })
-            .catch(err=>console.log(err))
+        if(data.length < 1){
+            fetch(`${process.env.BASE_URL}api/books/user`, {
+                method: "GET", 
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": localStorage.getItem("token")
+                },
+                })
+                .then(r=>r.json())
+                .then(r=>{
+                    if(r.books.length >0){
+                        setData(r.books)
+                    }
+                })
+                .catch(err=>console.log(err))
+        }
         
     })
     const unPublish = async(e) =>{
