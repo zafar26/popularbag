@@ -81,7 +81,7 @@ const Search= ()=> {
             });
         
             let result = await response.json(); 
-            if(!result.error){
+            if(result.books && result.books.length>1){
                 setBooks(result.books)
 
             }

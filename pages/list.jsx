@@ -30,10 +30,14 @@ const List= ()=> {
               },
             })
             .then(r=>r.json())
-            .then(r=>setData(r.books))
+            .then(r=>{
+                if(r.books.length >0){
+                    setData(r.books)
+                }
+            })
             .catch(err=>console.log(err))
         
-    },[])
+    })
     const unPublish = async(e) =>{
         try {
             const response = await fetch(`${process.env.BASE_URL}api/books/unpublish/${e.target.id}`, {
@@ -67,7 +71,7 @@ const List= ()=> {
                 <div className="w-full h-full bg-gray-100 p-4">
                     {
                             //Data
-                            data && data.length>0 && data?.map(d=>    
+                            data && data.length > 0 && data.map(d=>    
                                 <div className={`w-full h-24 p-2 my-2 flex justify-between rounded shadow text-white ${d.is_published? "bg-green-900 ":" bg-red-900 " } `} key={d._id}>
                                     <div className="w-full ">
                                             <p className="font-light"><span className='font-light'>Author :</span> {d.author}</p>
