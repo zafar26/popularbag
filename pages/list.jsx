@@ -23,7 +23,7 @@ const List= ()=> {
   
     useEffect(()=>{
         if(data.length < 1){
-            fetch(`${process.env.BASE_URL}api/books/user`, {
+            fetch(`/api/books/user`, {
                 method: "GET", 
                 headers: {
                     "Content-Type": "application/json",

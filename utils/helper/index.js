@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
 
 
-export function decodeToken(auth){
+export async function decodeToken(auth){
     let token = auth.split(" ")[1]
-    var decoded = jwt.verify(token, process.env.JWT_SECRET);
+    var decoded = await jwt.verify(token, process.env.JWT_SECRET);
     if(!decoded){
         return false
     }

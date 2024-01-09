@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     const { id } = req.query;
     if (req.method === 'PUT' && id) {
         try{
-            let userId = decodeToken(req.headers.authorization)
+            let userId = await decodeToken(req.headers.authorization)
             if(!userId ){ 
                 res.status(404).json({ message: "Invalid Token"})
             }

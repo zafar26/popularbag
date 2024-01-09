@@ -44,7 +44,7 @@ const Search= ()=> {
             })
             .then((response)=>response.json())
             .then((result)=> {
-                if(result.books && result.books.length > 1){
+                if(result.books && result.books.length > 0){
                     setBooks(result.books)
                 }
             })
@@ -61,7 +61,7 @@ const Search= ()=> {
           })
           .then((response)=>response.json())
           .then((result)=> {
-            if(result.books && result.books.length > 1){
+            if(result.books && result.books.length > 0){
                 setBooks(result.books)
             }
           })
@@ -85,7 +85,7 @@ const Search= ()=> {
             });
         
             let result = await response.json(); 
-            if(result.books && result.books.length>1){
+            if(result.books && result.books.length>0){
                 setBooks(result.books)
 
             }

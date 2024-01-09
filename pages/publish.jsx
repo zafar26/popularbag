@@ -30,7 +30,7 @@ const Publish= ()=> {
             if(result.error){
                 alert("failed")
             }else{
-                router.push("/")
+                // router.push("/")
                 alert("Published")
             }
 
