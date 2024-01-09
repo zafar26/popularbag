@@ -5,12 +5,17 @@ import NextCors from 'nextjs-cors';
 
 
 export default async function handler(req, res) {
-    await NextCors(req, res, {
-        // Options
-        methods: [ 'POST' ],
-        origin: '*',
-        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-     });
+    try{
+        await NextCors(req, res, {
+          // Options
+          methods: [ 'POST' ],
+          origin: '*',
+          optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+       });
+      } catch(er){
+             res.status(400).json({message: "FAILED Running Middleare"})
+             return 
+      }
     if (req.method === 'POST') {
         try{
             let userId = await decodeToken(req.headers.authorization)
