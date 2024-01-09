@@ -3,14 +3,65 @@ import connect from "@/db"
 import { createToken } from "@/utils/helper";
 import NextCors from 'nextjs-cors';
 
+export const config = {
+    api: {
+      externalResolver: true,
+    },
+  }
+// export async function OPTIONS(request) {
+//     const allowedOrigin = request.headers.get("origin");
+//     const response = new response(null, {
+//       status: 200,
+//       headers: {
+//         "Access-Control-Allow-Origin": allowedOrigin || "*",
+//         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+//         "Access-Control-Allow-Headers":
+//           "Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version",
+//         "Access-Control-Max-Age": "86400",
+//       },
+//     });
+  
+//     return response;
+// }
+
+// Initializing the cors middleware
+// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+// const cors = Cors({
+//     methods: ['POST', 'GET', 'HEAD'],
+//   })
+  
+  // Helper method to wait for a middleware to execute before continuing
+  // And to throw an error when an error happens in a middleware
+  function runMiddleware(
+    req,
+    res,
+    fn
+  ) {
+    return new Promise((resolve, reject) => {
+      fn(req, res, (result) => {
+        if (result instanceof Error) {
+          return reject(result)
+        }
+  
+        return resolve(result)
+      })
+    })
+  }
 
 export default async function login(req, res) {
-    await NextCors(req, res, {
-        // Options
-        methods: [ 'POST' ],
-        origin: '*',
-        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-     });
+    try{
+        
+        let cors = await NextCors(req, res, {
+            // Options
+            methods: [ 'POST' ],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
+        // Run the middleware
+        await runMiddleware(req, res, cors)
+    } catch(er){
+           res.status(400).json({message: "FAILED BEFORE"}) 
+    }
     if (req.method !== 'POST') {
         res.status(405).send({ message: 'Only POST requests allowed' })
         return
