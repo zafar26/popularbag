@@ -1,38 +1,20 @@
 'use client'
 import { useForm } from "react-hook-form"
-import {
-    useQuery,
-    useQueryClient,
-  } from '@tanstack/react-query'
+// import {
+//     useQuery,
+//     useQueryClient,
+//   } from '@tanstack/react-query'
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-function useBooks() {
-    return useQuery({
-        queryKey: ['books'],
-        queryFn: async () => {
-            try {
-                const response = await fetch(`${process.env.BASE_URL}api/books/published`, {
-                  method: "GET", 
-                  headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": localStorage.getItem("token")
-                  },
-                });
+// function useBooks() {
+//     return useQuery({
+//         queryKey: ['books'],
+//         queryFn: async () => {
             
-                let result = await response.json(); 
-                if(result.error){
-                    return {error:true}
-                }
-                return result.books
-
-              } catch (error) {
-                // console.error("Error:", error);
-                return {error}
-              }
-        },
-    })
-}
+//         },
+//     })
+// }
 async function getBooks(pageno){
     try {
         const response = await fetch(`${process.env.BASE_URL}api/books/published?page=${pageno}`, {
@@ -63,15 +45,34 @@ const Search= ()=> {
         formState: { errors },
       } = useForm()
     
-    const queryClient = useQueryClient()
-    const { status, data, error, isFetching } = useBooks()
-    const [books, setBooks] = useState(data?data:[])
+    // const queryClient = useQueryClient()
+    // const { status, data, error, isFetching } = useBooks()
+    const [books, setBooks] = useState([])
     const [page, setPage] = useState(1)
-    useEffect(()=>{
-        if(data && data.length>0){
-            setBooks(data)
-        }
-    },[data])
+    useEffect(async()=>{
+        try {
+            const response = await fetch(`${process.env.BASE_URL}api/books/published`, {
+              method: "GET", 
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+              },
+            });
+        
+            let result = await response.json(); 
+            if(result.error){
+                return {error:true}
+            }
+            if(result.books && result.books.length>0){
+                setBooks(result.books)
+            }
+
+          } catch (error) {
+            console.error("Error:", error);
+            // return {error}
+          }
+        
+    })
     useEffect(()=>{
         let new_books = getBooks(page)
         if(new_books && new_books.length > 1){
@@ -123,13 +124,8 @@ const Search= ()=> {
             </div>
             <div className="overflow-auto w-full h-full px-8 py-2">
                 {/* All Books */}
-                {status === 'pending' ? 
-                    <span>Loading......</span> 
-                    :   status === 'error' ? 
-                            <span>Error: {error.message}</span>
-                        :
-                        //Data
-                            books.map(d=> 
+                {
+                        books && books.length>0 && books.map(d=> 
                                 <div className="w-full  bg-gray-100 p-4" key={d._id}>
                                     <div className="w-full h-24 bg-red-100 p-2 flex justify-between ">
                                         <div className="w-full flex flex-col">

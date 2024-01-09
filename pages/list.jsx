@@ -1,42 +1,47 @@
 'use client'
-import {
-    useQuery,
-    useQueryClient,
-  } from '@tanstack/react-query'
+// import {
+//     useQuery,
+//     useQueryClient,
+//   } from '@tanstack/react-query'
 import Link from 'next/link';
 import { useRouter } from 'next/router'
+import { useEffect,useState } from 'react';
 
-function useBooks() {
-    return useQuery({
-        queryKey: ['books'],
-        queryFn: async () => {
-            try {
-                const response = await fetch(`${process.env.BASE_URL}api/books/user`, {
-                  method: "GET", 
-                  headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": localStorage.getItem("token")
-                  },
-                });
+// function useBooks() {
+//     return useQuery({
+//         queryKey: ['books'],
+//         queryFn: async () => {
             
-                let result = await response.json(); 
-                if(result.error){
-                    return {error:true}
-                }
-                return result.books
-
-              } catch (error) {
-                    // console.error("Error:", error);
-                    return {error}
-              }
-        },
-    })
-}
+//         },
+//     })
+// }
 const List= ()=> {
-    const queryClient = useQueryClient()
-    const { status, data, error, isFetching } = useBooks()
+    // const queryClient = useQueryClient()
+    // const { status, data, error, isFetching } = useBooks()
     const router = useRouter()
+    const[data, setData] = useState([])
   
+    useEffect(async()=>{
+        try {
+            const response = await fetch(`${process.env.BASE_URL}api/books/user`, {
+              method: "GET", 
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+              },
+            });
+        
+            let result = await response.json(); 
+            if(result.error){
+                return {error:true}
+            }
+            setData(result.books)
+
+          } catch (error) {
+                // console.error("Error:", error);
+                return {error}
+          }
+    })
     const unPublish = async(e) =>{
         try {
             const response = await fetch(`${process.env.BASE_URL}/api/books/unpublish/${e.target.id}`, {
@@ -68,13 +73,9 @@ const List= ()=> {
             <div className="overflow-auto w-full h-full px-8 py-2">
                 {/* All Books */}
                 <div className="w-full h-full bg-gray-100 p-4">
-                    {status === 'pending' ? 
-                        <span>Loading......</span> 
-                        :   status === 'error' ? 
-                                <span>Error: {error.message}</span>
-                            :
+                    {
                             //Data
-                            data?.map(d=>    
+                            data && data.length>0 && data?.map(d=>    
                                 <div className={`w-full h-24 p-2 my-2 flex justify-between rounded shadow text-white ${d.is_published? "bg-green-900 ":" bg-red-900 " } `} key={d._id}>
                                     <div className="w-full ">
                                             <p className="font-light"><span className='font-light'>Author :</span> {d.author}</p>
