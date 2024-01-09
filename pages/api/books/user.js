@@ -19,14 +19,17 @@ export default async function handler(req, res) {
             let userId = await decodeToken(req.headers.authorization)
             if(!userId ){ 
                 res.status(404).json({ message: "Invalid Token"})
+                return
             }
             await connect()
             
             let books = await Book.find({created_by: userId})
             res.status(200).json({ books })
+            return
         
         } catch(err){
             res.status(500).json({ message: "Failed to Get"})
+            return
         }
     }
 }

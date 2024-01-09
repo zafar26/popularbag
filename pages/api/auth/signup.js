@@ -29,10 +29,13 @@ export default async function signup(req, res) {
             let token = await createToken(new_user._id)
             
             res.status(200).json({token, message:"Signedup Succesfull"})
+            return
         } catch(err){
             res.status(500).json({ error: err,
                 message:'failed to Signup' })
+            return
         }
     }
     res.status(404).json({ error: 'User Name | Password Missing' })
+    return
 }

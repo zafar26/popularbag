@@ -19,6 +19,7 @@ export default async function handler(req, res) {
             let userId = await decodeToken(req.headers.authorization)
             if(!userId ){ 
                 res.status(404).json({ message: "Invalid Token"})
+                return
             }
             await connect()
 
@@ -33,10 +34,11 @@ export default async function handler(req, res) {
 
             let books = await Book.find({is_published: true}).skip((page-1) * limit).limit(limit)
             res.status(200).json({ books })
+            return
             
         }catch(err){
             res.status(500).json({ err, message:"Failed to get Books" })
-                
+            return
         }
     }
 }

@@ -20,13 +20,16 @@ export default async function handler(req, res) {
             let userId = await decodeToken(req.headers.authorization)
             if(!userId ){ 
                 res.status(404).json({ message: "Invalid Token"})
+                return
             }
             await connect()
 
             await Book.updateOne({ _id: id }, { $set: { is_published: false } });
             res.status(200).json({ message: "Book Unpublished"})
+            return
         } catch(err){
-            res.status(500).json({ message: "failed to Unpublished"})  
+            res.status(500).json({ message: "failed to Unpublished"}) 
+            return
         }
     }
 }

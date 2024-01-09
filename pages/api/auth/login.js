@@ -26,11 +26,15 @@ export default async function login(req, res) {
             if(user.verifyPasswordSync(info.password)){
                 let token = await createToken(user._id)
                 res.status(200).json({token, message:"Loged In Succes"})
+                return
             }
             res.status(404).json({ error: 'Wrong Password ' })
+            return
         } catch(err){
             res.status(500).json({ error:err, message: 'failed to Login' })
+            return
         }
     }
     res.status(404).json({ error: 'User Name | Password Missing' })
+    return
 }
