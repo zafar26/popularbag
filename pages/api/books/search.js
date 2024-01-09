@@ -1,21 +1,19 @@
-import { decodeToken } from "@/utils/helper";
+import { decodeToken, runMiddleware } from "@/utils/helper";
 import Book from "@/utils/models/Book";
 import connect from "@/db"
-import NextCors from "nextjs-cors";
+import Cors from 'cors'
 
+const cors = Cors({
+  methods: ['POST', 'GET', 'HEAD'],
+})
 
 export default async function handler(req, res) {
     try{
-        await NextCors(req, res, {
-          // Options
-          methods: [ 'GET' ],
-          origin: '*',
-          optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-       });
-      } catch(er){
-             res.status(400).json({message: "FAILED Running Middleare"})
-             return 
-      }
+        await runMiddleware(req, res, cors)
+    } catch(er){
+           res.status(400).json({message: "FAILED Running Middleare"})
+           return 
+    }
     if(req.method === "GET"){
         try{
             let userId = await decodeToken(req.headers.authorization)

@@ -1,21 +1,19 @@
 import User from "@/utils/models/User";
 import connect from "@/db"
-import { createToken } from "@/utils/helper";
-import NextCors from 'nextjs-cors';
+import { createToken, runMiddleware } from "@/utils/helper";
+import Cors from 'cors'
 
+const cors = Cors({
+  methods: ['POST', 'GET', 'HEAD'],
+})
 
 export default async function signup(req, res) {
     try{
-        await NextCors(req, res, {
-          // Options
-          methods: [ 'POST' ],
-          origin: '*',
-          optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-       });
-      } catch(er){
-             res.status(400).json({message: "FAILED Running Middleare"})
-             return 
-      }
+        await runMiddleware(req, res, cors)
+    } catch(er){
+           res.status(400).json({message: "FAILED Running Middleare"})
+           return 
+    }
     if (req.method !== 'POST') {
         res.status(405).send({ message: 'Only POST requests allowed' })
         return

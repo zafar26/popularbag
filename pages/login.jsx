@@ -25,7 +25,7 @@ const Login= ()=> {
         
             let result = await response.json(); 
             
-            if(!result.error){
+            if(result.token){
                 alert("Loged In")
                 localStorage.setItem("token",result.token)
                 router.push("/search")
