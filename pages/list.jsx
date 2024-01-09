@@ -21,30 +21,22 @@ const List= ()=> {
     const router = useRouter()
     const[data, setData] = useState([])
   
-    useEffect(async()=>{
-        try {
-            const response = await fetch(`${process.env.BASE_URL}api/books/user`, {
+    useEffect(()=>{
+        fetch(`${process.env.BASE_URL}api/books/user`, {
               method: "GET", 
               headers: {
                 "Content-Type": "application/json",
                 "Authorization": localStorage.getItem("token")
               },
-            });
+            })
+            .then(r=>r.json())
+            .then(r=>setData(r.books))
+            .catch(err=>console.log(err))
         
-            let result = await response.json(); 
-            if(result.error){
-                return {error:true}
-            }
-            setData(result.books)
-
-          } catch (error) {
-                // console.error("Error:", error);
-                return {error}
-          }
-    })
+    },[])
     const unPublish = async(e) =>{
         try {
-            const response = await fetch(`${process.env.BASE_URL}/api/books/unpublish/${e.target.id}`, {
+            const response = await fetch(`${process.env.BASE_URL}api/books/unpublish/${e.target.id}`, {
               method: "PUT", 
               headers: {
                 "Content-Type": "application/json",

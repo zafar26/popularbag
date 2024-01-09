@@ -15,26 +15,10 @@ import Link from "next/link";
 //         },
 //     })
 // }
-async function getBooks(pageno){
-    try {
-        const response = await fetch(`${process.env.BASE_URL}api/books/published?page=${pageno}`, {
-          method: "GET", 
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": localStorage.getItem("token")
-          },
-        });
+function getBooks(pageno){
     
-        let result = await response.json(); 
-        if(result.error){
-            return {error:true}
-        }
-        return result.books
 
-      } catch (error) {
-        // console.error("Error:", error);
-        return false
-      }
+    
 }
 
 const Search= ()=> {
@@ -49,35 +33,35 @@ const Search= ()=> {
     // const { status, data, error, isFetching } = useBooks()
     const [books, setBooks] = useState([])
     const [page, setPage] = useState(1)
-    useEffect(async()=>{
-        try {
-            const response = await fetch(`${process.env.BASE_URL}api/books/published`, {
-              method: "GET", 
-              headers: {
+    useEffect(()=>{
+        if(books.length <1){
+            fetch(`${process.env.BASE_URL}api/books/published`, {
+                method: "GET", 
+                headers: {
                 "Content-Type": "application/json",
                 "Authorization": localStorage.getItem("token")
               },
-            });
-        
-            let result = await response.json(); 
-            if(result.error){
-                return {error:true}
-            }
-            if(result.books && result.books.length>0){
-                setBooks(result.books)
-            }
-
-          } catch (error) {
-            console.error("Error:", error);
-            // return {error}
-          }
-        
+            })
+            .then((response)=>response.json())
+            .then((result)=> setBooks(result.books))
+            .catch((err)=>console.log(err))        
+        }
     })
     useEffect(()=>{
-        let new_books = getBooks(page)
-        if(new_books && new_books.length > 1){
-            setBooks(new_books)
-        }
+        fetch(`${process.env.BASE_URL}api/books/published?page=${page}`, {
+            method: "GET", 
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": localStorage.getItem("token")
+            },
+          })
+          .then((response)=>response.json())
+          .then((new_books)=> {
+            if(new_books && new_books.length > 1){
+                setBooks(new_books)
+            }
+          })
+          .catch((err)=>console.log(err))            
     },[page])
     
     const onSearch = async() => {
@@ -97,14 +81,13 @@ const Search= ()=> {
             });
         
             let result = await response.json(); 
-            if(result.error){
-                return {error:true}
+            if(!result.error){
+                setBooks(result.books)
+
             }
-            return {data:result.books}
 
         } catch (error) {
-            // console.error("Error:", error);
-            return { error }
+            console.error("Error:", error);
         }
     }
 
@@ -141,7 +124,7 @@ const Search= ()=> {
             </div>
             <div className=" flex justify-center">
                 {page>1 &&<button className="mx-4" onClick={()=>setPage(page-1)}>Prev</button>}
-                {books.length > 10 &&<button className="mx-4" onClick={()=> setPage(page+1)}>Next</button>}
+                {books.length > 1 &&<button className="mx-4" onClick={()=> setPage(page+1)}>Next</button>}
             </div>
         </div>
         
