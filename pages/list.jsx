@@ -80,7 +80,7 @@ const List= ()=> {
                     {
                             //Data
                             data && data.length > 0 ? data.map(d=>    
-                                <div className={`w-full h-24 p-2 md:my-2 my-1 flex flex-col justify-between rounded shadow  ${d.is_published? "bg-green-100 text-green-900 ":" bg-red-100 text-red-900" } `} key={d._id}>
+                                <div className={`w-full h-24 p-2 md:my-2 my-2 flex flex-col justify-between rounded shadow  ${d.is_published? "bg-green-100 text-green-900 ":" bg-red-100 text-red-900" } `} key={d._id}>
                                     <div className="w-full flex justify-between">
                                             <p className="font-light"><span className='font-light'>Author :</span> {d.author}</p>
                                             {
