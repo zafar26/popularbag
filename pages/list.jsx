@@ -60,7 +60,7 @@ const List= ()=> {
             <ClipLoader
             color={"#4F6F52"}
             loading={loader}
-            size={150}
+            size={90}
             aria-label="Loading Spinner"
             data-testid="loader"
             />
@@ -75,9 +75,8 @@ const List= ()=> {
         <div className=" h-full flex flex-col justify-start items-center self-center rounded shadow text-green-900">
             <h3 className="flex justify-center text-3xl font-semibold mt-2 md:mt-4">My Books</h3>
            
-            <div className=" w-full  h-full px-8 py-2 ">
+            <div className=" w-full  h-full md:px-8 px-2 py-2 overflow-auto bg-gray-100 rounded">
                 {/* All Books */}
-                <div className="w-full h-full  md:p-4 p-2 overflow-auto bg-gray-100 ">
                     {
                             //Data
                             data && data.length > 0 ? data.map(d=>    
@@ -100,7 +99,6 @@ const List= ()=> {
                             :
                             < p className='text-green-900 w-full h-full flex justify-center items-center'>No Books Found</p>
                     }  
-                </div>
             </div>
         </div>
         </div>

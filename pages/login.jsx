@@ -51,7 +51,7 @@ const Login= ()=> {
             <ClipLoader
             color={"#4F6F52"}
             loading={loader}
-            size={150}
+            size={90}
             aria-label="Loading Spinner"
             data-testid="loader"
             />
