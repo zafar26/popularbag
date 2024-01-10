@@ -1,7 +1,9 @@
 'use client'
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useState } from "react";
 import { useForm } from "react-hook-form"
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 const Publish= ()=> {
@@ -12,8 +14,10 @@ const Publish= ()=> {
         formState: { errors },
       } = useForm()
     const router = useRouter()
+    const [loader, setLoader] = useState(false)
     
     const onSubmit = async(data) => {
+        setLoader(true)
         try {
             const response = await fetch(`${process.env.BASE_URL}api/books/publish`, {
               method: "POST",
@@ -30,16 +34,27 @@ const Publish= ()=> {
             if(result.error){
                 alert("failed")
             }else{
-                // router.push("/")
                 alert("Published")
+                router.push("/")
             }
+            setLoader(false)
 
         } catch (error) {
             alert("failed")
 
         }
     }
-   
+    if(loader){    
+        return <div className='w-screen h-screen bg-white flex justify-center items-center'>
+            <ClipLoader
+            color={"#4F6F52"}
+            loading={loader}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            />
+        </div>
+    }
     return (<div className="w-full h-screen p-2 bg-gray-200 flex flex-col items-center">
                 <Link href={"/"} className='m-2 absolute right-0 top-0 h-18 bg-green-700 p-2 rounded shadow text-white '>Home</Link>
 

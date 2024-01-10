@@ -2,6 +2,8 @@
 import { useForm } from "react-hook-form"
 import { useRouter } from 'next/router'
 import Link from "next/link"
+import ClipLoader from "react-spinners/ClipLoader";
+import { useState } from "react";
 
 const SignUp= ()=> {
     const {
@@ -11,8 +13,15 @@ const SignUp= ()=> {
         formState: { errors },
       } = useForm()
       const router = useRouter()
+      const [loader, setLoader] = useState(false)
 
       const onSubmit = async (data) => {
+        setLoader(true)
+        if(data.password != data.confirmpassword){
+            setLoader(false)
+            alert("Password Did'nt Matched")
+            return
+        }
         
         try {
             const response = await fetch(`${process.env.BASE_URL}api/auth/signup`, {
@@ -32,15 +41,27 @@ const SignUp= ()=> {
             }else{
                 alert("failed")
             }
+            setLoader(false)
 
           } catch (error) {
             // console.error("Error:", error);
+            setLoader(false)
             alert("failed")
 
           }
     
     }
-    
+    if(loader){    
+        return <div className='w-screen h-screen bg-white flex justify-center items-center'>
+            <ClipLoader
+            color={"#4F6F52"}
+            loading={loader}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            />
+            </div>
+    }
     return (<div className="w-full h-screen p-2 bg-gray-200 flex flex-col items-center">
             <Link href={"/"} className='m-2 absolute right-0 top-0 h-18 bg-green-700 p-2 rounded shadow text-white '>Home</Link>
 
@@ -59,7 +80,7 @@ const SignUp= ()=> {
                 </div>
                 <div className="p-2">
                     <span>Password</span>
-                    <input className="px-4 py-2 w-full rounded shadow" {...register("password",{ required: true })}/>
+                    <input type="password" className="px-4 py-2 w-full rounded shadow" {...register("password",{ required: true })}/>
                     {errors.password && <span>This field is required</span>}
 
                 </div>

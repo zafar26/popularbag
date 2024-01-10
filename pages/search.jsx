@@ -1,25 +1,8 @@
 'use client'
 import { useForm } from "react-hook-form"
-// import {
-//     useQuery,
-//     useQueryClient,
-//   } from '@tanstack/react-query'
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
-// function useBooks() {
-//     return useQuery({
-//         queryKey: ['books'],
-//         queryFn: async () => {
-            
-//         },
-//     })
-// }
-function getBooks(pageno){
-    
-
-    
-}
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Search= ()=> {
     const {
@@ -28,30 +11,34 @@ const Search= ()=> {
         watch,
         formState: { errors },
       } = useForm()
-    
-    // const queryClient = useQueryClient()
-    // const { status, data, error, isFetching } = useBooks()
     const [books, setBooks] = useState([])
     const [page, setPage] = useState(1)
+    const [loader, setLoader] = useState(true)
+
+    // useEffect(()=>{
+    //     if(books.length <1){
+    //         fetch(`${process.env.BASE_URL}api/books/published`, {
+    //             method: "GET", 
+    //             headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": localStorage.getItem("token")
+    //           },
+    //         })
+    //         .then((response)=>response.json())
+    //         .then((result)=> {
+    //             if(result.books && result.books.length > 0){
+    //                 setBooks(result.books)
+    //             }
+    //             setLoader(false)
+    //         })
+    //         .catch((err)=>{
+    //             console.log(err)
+    //             setLoader(false)
+    //         })        
+    //     }
+    // })
     useEffect(()=>{
-        if(books.length <1){
-            fetch(`${process.env.BASE_URL}api/books/published`, {
-                method: "GET", 
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
-              },
-            })
-            .then((response)=>response.json())
-            .then((result)=> {
-                if(result.books && result.books.length > 0){
-                    setBooks(result.books)
-                }
-            })
-            .catch((err)=>console.log(err))        
-        }
-    })
-    useEffect(()=>{
+        setLoader(true)
         fetch(`${process.env.BASE_URL}api/books/published?page=${page}`, {
             method: "GET", 
             headers: {
@@ -61,20 +48,22 @@ const Search= ()=> {
           })
           .then((response)=>response.json())
           .then((result)=> {
-            if(result.books && result.books.length > 0){
+            if(result.books ){
                 setBooks(result.books)
             }
+            setLoader(false)
           })
-          .catch((err)=>console.log(err))            
+          .catch((err)=>{
+            console.log(err)
+            setLoader(false)
+        
+        })            
     },[page])
     
-    const onSearch = async() => {
-        const data = await searchBooks(watch("searchValue"))
-        if(data){
-            setBooks(data.data)
-        }
-    }
+    const onSearch = () => searchBooks(watch("searchValue"))
+        
     async function searchBooks(searchValue) {
+        setLoader(true)        
         try {
             const response = await fetch(`${process.env.BASE_URL}api/books/search?searchTitle=${searchValue}`, {
                 method: "GET", 
@@ -87,20 +76,34 @@ const Search= ()=> {
             let result = await response.json(); 
             if(result.books && result.books.length>0){
                 setBooks(result.books)
-
+            }else{
+                alert("No Book Found")
+                
             }
+            setLoader(false)
 
         } catch (error) {
+            setLoader(false)
             console.error("Error:", error);
         }
     }
-
-    return (<div className="w-full h-screen p-2 bg-gray-200 flex flex-col items-center">
+    if(loader){    
+        return <div className='w-screen h-screen bg-white flex justify-center items-center'>
+            <ClipLoader
+                color={"#4F6F52"}
+                loading={loader}
+                size={150}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            />
+            </div>
+    }
+    return (<div className="w-full h-screen p-2 bg-gray-200 flex flex-col items-center bg-green-200">
                 <Link href={"/"} className='m-2 absolute right-0 top-0 h-18 bg-green-700 p-2 rounded shadow text-white '>Home</Link>
 
-        <div className="md:w-1/2  h-full flex flex-col justify-start items-center bg-green-200 rounded shadow text-green-900">
-            <h3 className="flex justify-center text-3xl font-semibold mt-4 ">Search a book</h3>
-            <div className="flex  justify-center items-end w-full px-4">
+        <div className="md:w-1/2 w-full h-full flex flex-col justify-start items-center  rounded shadow text-green-900">
+            <h3 className="flex justify-center text-3xl font-semibold mt-4 mr-8 md:mr-0">Search a book</h3>
+            <div className="flex justify-center items-end w-full ">
                 <div className="p-2">
                     <input className="px-4 py-2 w-full rounded shadow" placeholder="Search a Book" {...register("searchValue",{ required: true })}/>
                 </div>
@@ -109,26 +112,27 @@ const Search= ()=> {
                     <button className="px-4 py-2 w-full bg-green-800 rounded shadow text-white"onClick={onSearch}>Search</button>
                 </div>
             </div>
-            <div className="overflow-auto w-full h-full px-8 py-2">
+            <div className="overflow-auto w-full h-full md:px-8 px-2 py-2 rounded">
                 {/* All Books */}
                 {
-                        books && books.length>0 && books.map(d=> 
-                                <div className="w-full  bg-gray-100 p-4" key={d._id}>
-                                    <div className="w-full h-24 bg-red-100 p-2 flex justify-between ">
+                        books && books.length>0 ? books.map(d=> 
+                                <div className="w-full  bg-gray-100 md:p-4 p-2" key={d._id}>
+                                    <div className="w-full h-24 bg-green-100 text-green-900 p-2 flex justify-between rounded shadow">
                                         <div className="w-full flex flex-col">
-                                            <span className="font-light">{d.author}</span>
-                                            <span className="font-bold">{d.title}</span>
-                                            <p className="px-2 ">
-                                                {d.description}
-                                            </p>
+                                            <span className="font-light">Author: {d.author}</span>
+                                            <span className="font-bold">Title: {d.title}</span>
+                                            <p className=" ">Description: {d.description}</p>
                                         </div>
                                     </div>
                                 </div>)
+                                :
+                                < p className='text-green-900 bg-gray-100 w-full h-full flex justify-center items-center'>No Books Found</p>
+
                         }
             </div>
             <div className=" flex justify-center">
                 {page>1 &&<button className="mx-4" onClick={()=>setPage(page-1)}>Prev</button>}
-                {books.length > 1 &&<button className="mx-4" onClick={()=> setPage(page+1)}>Next</button>}
+                {books.length >= 10 &&<button className="mx-4" onClick={()=> setPage(page+1)}>Next</button>}
             </div>
         </div>
         
