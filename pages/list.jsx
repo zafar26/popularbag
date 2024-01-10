@@ -81,13 +81,13 @@ const List= ()=> {
                     {
                             //Data
                             data && data.length > 0 ? data.map(d=>    
-                                <div className={`w-full h-24 p-2 md:my-2 my-1 flex flex-col justify-between rounded shadow text-white  ${d.is_published? "bg-green-600 ":" bg-red-600 " } `} key={d._id}>
+                                <div className={`w-full h-24 p-2 md:my-2 my-1 flex flex-col justify-between rounded shadow  ${d.is_published? "bg-gray-100 text-green-900 ":" bg-red-100 text-red-900" } `} key={d._id}>
                                     <div className="w-full flex justify-between">
                                             <p className="font-light"><span className='font-light'>Author :</span> {d.author}</p>
                                             {
                                         d.is_published &&
                                             <div className="">
-                                                <button className="bg-red-900 p-1 text-xs md:p-2  rounded shadow text-white" id={d._id} onClick={unPublish}>Un Publish</button>
+                                                <button className="bg-red-800 p-1 text-xs md:p-2  rounded shadow text-white" id={d._id} onClick={unPublish}>Un Publish</button>
                                             </div>
                                     }
 
