@@ -121,7 +121,7 @@ const Search= ()=> {
                                         <div className="w-full flex flex-col">
                                             <span className="font-light">Author: {d.author}</span>
                                             <span className="font-bold">Title: {d.title}</span>
-                                            <p className=" ">Description: { d.description && d.description.length>22 ? d.description.slice(0,9)+"...":d.description }</p>
+                                            <p className=" ">Description: { d.description && d.description.length>22 ? d.description.slice(0,21)+"...":d.description }</p>
                                         </div>
                                     </div>
                                 </div>)
