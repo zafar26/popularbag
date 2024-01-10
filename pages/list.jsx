@@ -92,7 +92,7 @@ const List= ()=> {
 
                                     </div>
                                             <p className="font-bold"><span className='font-light'>Title :</span> {d.title}</p>
-                                            <p className=""><span className='font-light'>Description :</span>{ d.description && d.description.length>22 ? d.description.slice(0,21)+"...":d.description }</p>
+                                            <p className=""><span className='font-light'>Description :</span>{ d.description && d.description.length>24 ? d.description.slice(0,23)+"...":d.description }</p>
                                     
                                 </div>
                             )
