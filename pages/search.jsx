@@ -120,7 +120,7 @@ const Search= ()=> {
                                     <div className="w-full h-24 bg-green-100 text-green-900 p-2 flex justify-between rounded shadow">
                                         <div className="w-full flex flex-col">
                                             <span className="font-light">Author: {d.author}</span>
-                                            <span className="font-bold">Title: {d.title}</span>
+                                            <span className="font-bold text-xl">Title: {d.title}</span>
                                             <p className=" ">Description: { d.description && d.description.length>24 ? d.description.slice(0,23)+"...":d.description }</p>
                                         </div>
                                     </div>
