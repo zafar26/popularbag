@@ -28,9 +28,10 @@ export default async function handler(req, res) {
                 description: info.description,
                 price: info.price,
                 image: info.image,
+                stock: info.stock
             })
             await new_bag.save()
-            res.status(200).json({ message: "Bag Published"})
+            res.status(200).json({ message: "Bag Added"})
             return
         }catch(err){
             res.status(500).json({ err, message: "Failed "}) 

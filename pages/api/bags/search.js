@@ -23,7 +23,7 @@ export default async function handler(req, res) {
             }
             await connect()
 
-            const query =  { "title": { $regex: new RegExp(req.query.searchTitle, 'i') } };
+            const query =  { "title": { $regex: new RegExp(req.query.searchTitle, 'i') }, is_published:true };
 
             const bags = await Bag.find(query)
 

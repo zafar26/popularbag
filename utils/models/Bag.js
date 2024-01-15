@@ -12,6 +12,9 @@ const bagSchema= new Schema({
     price: {
         type: Number,
     },
+    stock: {
+        type: Number,
+    },
     image: {
         type: String,
     },
