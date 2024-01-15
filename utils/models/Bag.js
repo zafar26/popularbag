@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const bookSchema= new Schema({
-    name: {
+const bagSchema= new Schema({
+    title: {
         type: String,
     },
     description: {
@@ -11,6 +11,9 @@ const bookSchema= new Schema({
     },
     price: {
         type: Number,
+    },
+    image: {
+        type: String,
     },
     is_published: {
         type: Boolean,
@@ -22,4 +25,4 @@ const bookSchema= new Schema({
     },
 }, { timestamps: true })
 
-export default mongoose.models.Book || mongoose.model("Book", bookSchema);
+export default mongoose.models.Bag || mongoose.model("Bag", bagSchema);

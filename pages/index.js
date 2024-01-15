@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useRouter } from "next/router"
+import { signOut } from 'next-auth/react'
 
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
   const onLogout = () =>{
     localStorage.removeItem("token"); 
     alert("Loged out")
+    signOut()
     router.reload()
   }
   return (
@@ -28,6 +30,7 @@ export default function Home() {
           <Link href={"/search"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Search a Book</Link>
             <Link href={"/publish"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Publish a Book</Link>
             <Link href={"/list"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>My Books</Link>
+            <Link href={"/payment"} className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white '>Make Payment</Link>
             <button className='m-2  h-18 bg-green-700 p-2 rounded shadow text-white ' onClick={onLogout}>Log Out</button>
           
             </>
