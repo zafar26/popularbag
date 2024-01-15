@@ -61,6 +61,7 @@ const SignUp= ()=> {
     
     }
     if(session && session.user){
+        setLoader(true)
         fetch(`/api/auth/getuser`, {
             method: "POST", 
             headers: {
@@ -74,6 +75,7 @@ const SignUp= ()=> {
                 if(r.found){
                     router.push("/login")
                 }
+                setLoader(true)
             })
             .catch(err=>{
                 // console.log(err)
