@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-
+import axios from 'axios'
 
 export async function decodeToken(auth){
     let token = auth.split(" ")[1]
@@ -25,3 +25,15 @@ export async function runMiddleware(req, res, fn) {
       })
     })
   }
+
+
+// Discord Logger
+export const discordLog = (username, message) =>
+axios
+    .post(process.env.DISCORD_WEBHOOK_URL, {
+        username,
+        avatar_url: '',
+        content: message,
+    })
+    .then((r) => {})
+    .catch((err) => {})

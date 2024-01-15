@@ -1,4 +1,5 @@
 'use client'
+import { discordLog } from '@/utils/helper';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import { useEffect,useState } from 'react';
@@ -24,7 +25,11 @@ const List= ()=> {
                     }
                     setLoader(false)
                 })
-                .catch(err=>{console.log(err)
+                .catch(err=>{
+                    // console.log(err)
+                    discordLog("logger",
+                        `Error: On Listing with a message "${err.message}"`,
+                    )
                     setLoader(false)
                 })
         }
@@ -52,6 +57,9 @@ const List= ()=> {
         } catch (error) {
             // console.error("Error:", error);
             setLoader(false)
+            discordLog("logger",
+                `Error: Failed Unpublish with a message "${error.message}"`,
+            )
             alert("Failed to Unpublish")
           }
     }

@@ -1,3 +1,4 @@
+import { discordLog } from '@/utils/helper';
 import { useState } from 'react';
 import useRazorpay from 'react-razorpay';
 
@@ -32,13 +33,16 @@ const PaymentPage = () => {
         description: 'Payment for Your Order',
         order_id: order.id,
         handler: (response) => {
-          console.log(response);
+          // console.log(response);
+          discordLog("Payment "
+            `Message: "${response}"`,
+        )
           // Handle the payment success
         },
         prefill: {
-          // name: 'User Name',
+          name: 'My Name',
           email: '',
-          contact: '+91xxxxxxxxxx',
+          contact: '+91',
         },
         theme: {
           color: '#3399cc',

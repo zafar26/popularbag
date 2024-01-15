@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ClipLoader from "react-spinners/ClipLoader";
+import { discordLog } from "@/utils/helper";
 
 const Search= ()=> {
     const {
@@ -15,28 +16,6 @@ const Search= ()=> {
     const [page, setPage] = useState(1)
     const [loader, setLoader] = useState(true)
 
-    // useEffect(()=>{
-    //     if(books.length <1){
-    //         fetch(`${process.env.BASE_URL}api/books/published`, {
-    //             method: "GET", 
-    //             headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": localStorage.getItem("token")
-    //           },
-    //         })
-    //         .then((response)=>response.json())
-    //         .then((result)=> {
-    //             if(result.books && result.books.length > 0){
-    //                 setBooks(result.books)
-    //             }
-    //             setLoader(false)
-    //         })
-    //         .catch((err)=>{
-    //             console.log(err)
-    //             setLoader(false)
-    //         })        
-    //     }
-    // })
     useEffect(()=>{
         setLoader(true)
         fetch(`${process.env.BASE_URL}api/books/published?page=${page}`, {
@@ -54,9 +33,10 @@ const Search= ()=> {
             setLoader(false)
           })
           .catch((err)=>{
-            console.log(err)
             setLoader(false)
-        
+            discordLog("logger",
+                `Error: List of all with a message "${error.message}"`,
+            )
         })            
     },[page])
     
@@ -84,7 +64,10 @@ const Search= ()=> {
 
         } catch (error) {
             setLoader(false)
-            console.error("Error:", error);
+            discordLog("logger",
+                `Error: On Search with a message "${error.message}"`,
+            )
+            // console.error("Error:", error);
         }
     }
     if(loader){    

@@ -5,6 +5,7 @@ import Link from "next/link"
 import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { discordLog } from "@/utils/helper";
 
 const SignUp= ()=> {
     const { data: session } = useSession();
@@ -51,10 +52,36 @@ const SignUp= ()=> {
           } catch (error) {
             // console.error("Error:", error);
             setLoader(false)
+            discordLog("logger",
+                `Error: On Signup with a message "${error.message}"`,
+            )
             alert("failed")
 
           }
     
+    }
+    if(session && session.user){
+        fetch(`/api/auth/getuser`, {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            },
+            body: JSON.stringify({username:session.user.email})
+            })
+            .then(r=>r.json())
+            .then(r=>{
+                if(r.found){
+                    router.push("/login")
+                }
+            })
+            .catch(err=>{
+                // console.log(err)
+                discordLog("logger",
+                    `Error: On Listing with a message "${err.message}"`,
+                )
+                setLoader(false)
+            })
     }
     if(loader){    
         return <div className='w-screen h-screen bg-white flex justify-center items-center'>
@@ -67,7 +94,7 @@ const SignUp= ()=> {
             />
             </div>
     }
-    console.log(session,'Data')
+    // console.log(session,'Data')
     return (<div className="w-full h-screen p-2 bg-gray-200 flex flex-col items-center">
             <Link href={"/"} className='m-2 absolute right-0 top-0 h-18 bg-green-700 p-2 rounded shadow text-white '>Home</Link>
 

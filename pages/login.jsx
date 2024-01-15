@@ -5,6 +5,7 @@ import Link from "next/link"
 import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { discordLog } from "@/utils/helper";
 
 
 const Login= ()=> {
@@ -45,6 +46,9 @@ const Login= ()=> {
             
         } catch (error) {
             setLoader(false)
+            discordLog("logger",
+                `Error: On Login with a message "${error.message}"`,
+            )
             // console.error("Error:", error);
             alert("failed")
 

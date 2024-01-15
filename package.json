@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.17.9",
+    "axios": "^1.6.5",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",

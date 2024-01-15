@@ -1,4 +1,5 @@
 'use client'
+import { discordLog } from "@/utils/helper";
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react";
@@ -40,6 +41,9 @@ const Publish= ()=> {
             setLoader(false)
 
         } catch (error) {
+            discordLog("logger",
+                `Error: Failed to Add with a message "${error.message}"`,
+            )
             alert("failed")
 
         }
