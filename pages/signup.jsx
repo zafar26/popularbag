@@ -140,9 +140,8 @@ const SignUp= ()=> {
                     <button type="submit" className="px-4 py-2 w-full bg-green-800 rounded shadow text-white" >Submit</button>
                 </div>
             </form>
-            {!session && (
+            
         <button onClick={() => signIn('google')} className="mt-4 bg-gray-100 p-4 rounded shadow border border-green-800">Sign in with Google</button>
-      ) }
         </div>
     </div>)
 }

@@ -107,9 +107,7 @@ const Login= ()=> {
             <Link href="/signup" className="p-4 bg-gray-100 rounded shadow">Create an Account</Link>
         
             <div>
-            {!session && (
-        <button onClick={() => signIn('google')}>Sign in with Google</button>
-      ) }
+            <button onClick={() => signIn('google')}>Sign in with Google</button>
 
             </div>
         </div>
