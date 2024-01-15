@@ -75,11 +75,14 @@ const Login= ()=> {
         <div className="md:w-1/3  h-full flex flex-col justify-center items-center bg-green-200 rounded shadow text-green-900">
             <h3 className="flex justify-center text-3xl font-semibold mt-4 ">Login</h3>
             <form className="   w-full px-4"onSubmit={handleSubmit(onSubmit)} >
-                    <div className="mt-4 flex justify-center text-center">
+                    
+                {session && session.user 
+                ?
+                <div className="mt-4 flex justify-center text-center">
                         <p className=" ">Welcome, <br /> {session&&  session.user.name}!</p>
                     {/* <button onClick={() => signOut()}>Sign out</button> */}
-                    </div>
-                {session && !session.user && 
+                </div>
+                : 
                 <div className="p-2">
                     <span>User Name</span>
                     <input className="px-4 py-2 w-full rounded shadow"  {...register("username",{ required: true })}/>
@@ -97,7 +100,7 @@ const Login= ()=> {
                 </div>
             </form>
             or
-            <div className="p-4 bg-gray-100 rounded shadow">Create an Account</div>
+            <Link href="/signup" className="p-4 bg-gray-100 rounded shadow">Create an Account</Link>
         
             <div>
             {!session && (

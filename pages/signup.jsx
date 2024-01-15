@@ -75,22 +75,24 @@ const SignUp= ()=> {
             <h3 className="flex justify-center text-3xl font-semibold mt-4 ">Signup</h3>
             <form className="w-full px-4"  onSubmit={handleSubmit(onSubmit)}>
                     
-                {session && !session.user ? <> <div className="p-2">
-                    <span>Name</span>
-                    <input className="px-4 py-2 w-full rounded shadow" {...register("name")}/>
-                </div>
-                <div className="p-2">
-                    <span>User Name</span>
-                    <input className="px-4 py-2 w-full rounded shadow" {...register("username",{ required: true })}/>
-                    {errors.username && <span>This field is required</span>}
-
-                </div>
-                </>
+                {session && session.user ?
+                    <div className="mt-4 flex justify-center text-center">
+                        <p className=" ">Welcome, <br /> {session&&  session.user.name}!</p>
+                        {/* <button onClick={() => signOut()}>Sign out</button> */}
+                    </div>
                 :
-                <div className="mt-4 flex justify-center text-center">
-                    <p className=" ">Welcome, <br /> {session&&  session.user.name}!</p>
-                {/* <button onClick={() => signOut()}>Sign out</button> */}
-                </div>
+                <>
+                    <div className="p-2">
+                        <span>Name</span>
+                        <input className="px-4 py-2 w-full rounded shadow" {...register("name")}/>
+                    </div>
+                    <div className="p-2">
+                        <span>User Name</span>
+                        <input className="px-4 py-2 w-full rounded shadow" {...register("username",{ required: true })}/>
+                        {errors.username && <span>This field is required</span>}
+
+                    </div>
+                </>
                 }
                 <div className="p-2">
                     <span>Password</span>
